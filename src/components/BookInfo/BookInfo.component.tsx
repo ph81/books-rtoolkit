@@ -1,8 +1,9 @@
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Heading, IconButton, Text } from '@chakra-ui/react';
 import { useDeleteBookMutation } from '../../redux/bookSlice';
 import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import Loading from '../Loading';
+import Error from '../Error';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Box, Heading, IconButton, Text } from '@chakra-ui/react';
 
 const BookInfo = ({
   title,
@@ -14,19 +15,16 @@ const BookInfo = ({
   author: string | undefined;
   bookId: string;
 }) => {
-  const [deleteBook, { isLoading, isError, isSuccess }] =
-    useDeleteBookMutation();
+  const [deleteBook, { isLoading, isError }] = useDeleteBookMutation();
   const history = useHistory();
 
-  useEffect(() => {
-    if (isSuccess) {
-      alert('Note deleted successfully');
-    }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    if (isError) {
-      alert('error');
-    }
-  }, [isLoading]);
+  if (isError) {
+    return <Error />;
+  }
 
   const onDeleteHandler = (bookId: string) => {
     console.log(bookId);

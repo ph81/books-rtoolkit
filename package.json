@@ -1,7 +1,7 @@
 {
-  "name": "vite-keep-ts",
+  "name": "books-rtoolkit",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,16 +16,13 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.0.15",
     "@chakra-ui/react": "^2.4.6",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@reduxjs/toolkit": "^1.9.1",
-    "axios": "^1.2.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "framer-motion": "^8.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
+    "react-toastify": "^9.1.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

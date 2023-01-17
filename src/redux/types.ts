@@ -9,7 +9,7 @@ export type MutateBook = {
   author?: string;
 };
 
-export type IGenericResponse = {
+export type GenericResponse = {
   status: string;
   message: string;
 };

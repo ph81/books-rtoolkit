@@ -15,15 +15,13 @@ const BookList = (): JSX.Element => {
     { refetchOnFocus: true, refetchOnReconnect: true }
   );
 
-  console.log(bookList);
-
   return (
     <Flex
-      height="100vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
       paddingTop="10px"
+      paddingBottom="30px"
     >
       <Box width="50%">
         <Box

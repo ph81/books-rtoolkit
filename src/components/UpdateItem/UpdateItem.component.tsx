@@ -1,16 +1,18 @@
-import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
   useGetAllBooksQuery,
   useUpdateBookMutation,
 } from '../../redux/bookSlice';
 import { useHistory, useParams } from 'react-router-dom';
+import Loading from '../Loading';
+import Error from '../Error';
+import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 
 const UpdateItem = (): JSX.Element => {
   const navigate = useHistory();
   const { bookId } = useParams<{ bookId: string }>();
 
-  const { data: booklist, isLoading } = useGetAllBooksQuery(
+  const { data: booklist, isFetching } = useGetAllBooksQuery(
     { page: 1 },
     { refetchOnFocus: true, refetchOnReconnect: true }
   );
@@ -18,10 +20,8 @@ const UpdateItem = (): JSX.Element => {
   const itemToEdit = booklist?.find((book) => book.bookId === bookId);
   const [title, setTitle] = useState<string | undefined>(itemToEdit?.title);
   const [author, setAuthor] = useState<string | undefined>(itemToEdit?.author);
-  console.log(itemToEdit);
-  console.log(isLoading ? 'data:' : booklist);
-
-  const [updateBook] = useUpdateBookMutation();
+  const [updateBook, { isLoading, isError }] = useUpdateBookMutation();
+  const loading = isFetching || isLoading;
 
   const handleOnSubmit = () => {
     const book = {
@@ -33,6 +33,14 @@ const UpdateItem = (): JSX.Element => {
     navigate.push('/');
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
+
   const clearInputs = () => {
     setTitle('');
     setAuthor('');
@@ -41,7 +49,7 @@ const UpdateItem = (): JSX.Element => {
   return (
     <>
       <Flex
-        height="100vh"
+        height="50vh"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
