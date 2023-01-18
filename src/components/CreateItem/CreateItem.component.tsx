@@ -1,15 +1,16 @@
-import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useCreateBookMutation } from '../../redux/bookSlice';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import Loading from '../Loading';
+import Error from '../Error';
+import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 
 const CreateItem = (): JSX.Element => {
   const navigate = useHistory();
   const [title, setTitle] = useState<string | undefined>('');
   const [author, setAuthor] = useState<string | undefined>('');
-  const [createBook, { isLoading, isError, isSuccess }] =
-    useCreateBookMutation();
+  const [createBook, { isLoading, isError }] = useCreateBookMutation();
 
   const handleOnSubmit = () => {
     const data = {
@@ -27,15 +28,18 @@ const CreateItem = (): JSX.Element => {
     setAuthor('');
   };
 
-  const loading = isLoading;
-  if (loading) return <h3>loading...</h3>;
-  if (isError) return <h3>error!</h3>;
-  if (isSuccess) return <h3>success!</h3>;
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
 
   return (
     <>
       <Flex
-        height="100vh"
+        height="50vh"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
